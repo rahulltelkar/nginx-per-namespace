@@ -1,0 +1,74 @@
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "ClusterRole"
+rules:
+- apiGroups:
+  - ""
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "configmaps"
+  - "endpoints"
+  - "nodes"
+  - "pods"
+  - "secrets"
+  verbs:
+  - "list"
+  - "watch"
+- apiGroups:
+  - ""
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "nodes"
+  verbs:
+  - "get"
+- apiGroups:
+  - ""
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "services"
+  verbs:
+  - "get"
+  - "list"
+  - "update"
+  - "watch"
+- apiGroups:
+  - "extensions"
+  - "networking.k8s.io"
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "ingresses"
+  verbs:
+  - "get"
+  - "list"
+  - "watch"
+- apiGroups:
+  - ""
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "events"
+  verbs:
+  - "create"
+  - "patch"
+- apiGroups:
+  - "extensions"
+  - "networking.k8s.io"
+  nonResourceURLs: []
+  resourceNames: []
+  resources:
+  - "ingresses/status"
+  verbs:
+  - "update"
+metadata:
+  annotations: {}
+  name: "nginx-ingress"
+  labels:
+    app: "nginx-ingress"
+    heritage: "Tiller"
+    app.kubernetes.io/name: "nginx-ingress-1"
+    chart: "nginx-ingress-1.41.3"
+    release: "nginx-ingress"

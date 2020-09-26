@@ -1,0 +1,27 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  annotations: {}
+  name: "nginx-ingress-default-backend"
+  labels:
+    app: "nginx-ingress"
+    component: "default-backend"
+    app.kubernetes.io/name: "nginx-ingress-1"
+    release: "nginx-ingress"
+    heritage: "Tiller"
+    chart: "nginx-ingress-1.41.3"
+    app.kubernetes.io/component: "deployment.nginx-ingress-default-backend"
+spec:
+  externalIPs: []
+  loadBalancerSourceRanges: []
+  type: "ClusterIP"
+  selector:
+    app: "nginx-ingress"
+    release: "nginx-ingress"
+    app.kubernetes.io/component: "deployment.nginx-ingress-default-backend"
+  ports:
+  - name: "http"
+    port: 80
+    protocol: "TCP"
+    targetPort: "http"

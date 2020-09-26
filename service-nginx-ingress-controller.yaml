@@ -1,0 +1,31 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  annotations: {}
+  name: "nginx-ingress-controller"
+  labels:
+    app: "nginx-ingress"
+    component: "controller"
+    app.kubernetes.io/name: "nginx-ingress-1"
+    release: "nginx-ingress"
+    heritage: "Tiller"
+    chart: "nginx-ingress-1.41.3"
+    app.kubernetes.io/component: "deployment.nginx-ingress-controller"
+spec:
+  externalIPs: []
+  loadBalancerSourceRanges: []
+  type: "NodePort"
+  selector:
+    app: "nginx-ingress"
+    release: "nginx-ingress"
+    app.kubernetes.io/component: "deployment.nginx-ingress-controller"
+  ports:
+  - name: "http"
+    port: 80
+    protocol: "TCP"
+    targetPort: "http"
+  - name: "https"
+    port: 443
+    protocol: "TCP"
+    targetPort: "https"

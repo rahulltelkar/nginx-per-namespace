@@ -1,0 +1,73 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  annotations: {}
+  name: "nginx-ingress-default-backend"
+  labels:
+    app: "nginx-ingress"
+    app.kubernetes.io/name: "nginx-ingress-1"
+    release: "nginx-ingress"
+    heritage: "Tiller"
+    chart: "nginx-ingress-1.41.3"
+    app.kubernetes.io/component: "deployment.nginx-ingress-default-backend"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: "nginx-ingress"
+      release: "nginx-ingress"
+      app.kubernetes.io/component: "deployment.nginx-ingress-default-backend"
+    matchExpressions: []
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app: "nginx-ingress"
+        release: "nginx-ingress"
+        app.kubernetes.io/component: "deployment.nginx-ingress-default-backend"
+    spec:
+      terminationGracePeriodSeconds: 60
+      nodeSelector: {}
+      serviceAccountName: "nginx-ingress-backend"
+      containers:
+      - name: "nginx-ingress-default-backend"
+        image: "k8s.gcr.io/defaultbackend-amd64:1.5"
+        command: []
+        args: []
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - name: "http"
+          containerPort: 8080
+          protocol: "TCP"
+        livenessProbe:
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+          httpGet:
+            path: "/healthz"
+            port: 8080
+            scheme: "HTTP"
+        readinessProbe:
+          initialDelaySeconds: 0
+          timeoutSeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+          httpGet:
+            path: "/healthz"
+            port: 8080
+            scheme: "HTTP"
+        securityContext:
+          runAsUser: 65534
+        resources:
+          limits: {}
+          requests: {}
